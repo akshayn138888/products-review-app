@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+  <a href = "/" > Home  </a>
+<a href = "/about" > About Us  </a>
+<a href = "/contact_us" > Contact_us </a>
+  <a href = "/billsplitter" > Bill-split  </a>
+    <%= yield %>
+  </body>
+</html>

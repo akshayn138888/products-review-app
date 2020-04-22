@@ -1,0 +1,23 @@
+
+<%= form_tag("/total") do %>
+  <div>
+    <%= label_tag(:amount) %> <br>
+    <%= number_field_tag(:amount) %>
+  </div>
+
+  <div>
+    <%= label_tag(:tax) %> <br>
+    <%= number_field_tag(:tax) %>
+  </div>
+
+  <div>
+    <%= label_tag(:tip) %> <br>
+    <%= number_field_tag(:tip) %>
+  </div>
+   <div>
+    <%= label_tag(:people) %> <br>
+    <%= number_field_tag(:people) %>
+  </div>
+  <%= submit_tag("Calculate Total per Person")%>
+<% end %>
+
