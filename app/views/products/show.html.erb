@@ -1,0 +1,33 @@
+<div class='shadow-sm p-3 mb-5 bg-white rounded overflow-wrap'>
+  <h1>
+    <span class='badge badge-pill badge-info'>
+      <%= @product.id %>
+    </span>
+    <%= @product.title %>
+    
+  </h1>
+  <p> Actual Price : $<%= @product.price %> </p>
+  <p>Sales Price : $<%= @product.sales_price %> </p>
+  <p class='shadow-none p-3 mb-5 bg-light rounded'><%= @product.description %></p>
+
+  <%# link_to arguments: name, path, options_object %>
+
+  <div>
+    <%= link_to(
+      "Edit",
+      edit_product_path(@product),
+      class: 'btn btn-info'
+    )
+    %>
+    <%= link_to(
+      "Delete",
+      product_path(@product),
+      method: :delete,
+      class: 'btn btn-danger',
+      data: { confirm: 'are you sure?' }
+    )
+    %>
+    
+  </div>
+
+</div>
