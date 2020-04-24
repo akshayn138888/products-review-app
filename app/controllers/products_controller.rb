@@ -18,6 +18,9 @@ class ProductsController < ApplicationController
   def show
     id = params[:id]
     @product = Product.find(id)
+    #### a change is very important here also if your relating it to other things.
+    @review = Review.new 
+    @reviews = @product.reviews.order(created_at: :desc)
   end
   def destroy
     id = params[:id]

@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Review.all
+Review.delete_all
 Product.delete_all
 
 NUM_PRODUCT = 1000
