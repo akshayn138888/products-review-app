@@ -4,13 +4,11 @@ class ProductsController < ApplicationController
     end
    
   def new
-    @product = Product.new # we need an instance of our resource to be used with `form_with`
+    @product = Product.new 
   end
   
   def create
-    # params.require(:product).permit(:title, :body) => tells rails to allow an object on the params that is called question. And on that question object allow the keys :title and :body
     @product = Product.new(params.require(:product).permit(:title, :description, :price,:sales_price))
-    #tell active record to goahead and run the INSERT SQL query against our db. Returns true if it saves, returns false if it doesn't save
     if @product.save
       redirect_to products_path
     else

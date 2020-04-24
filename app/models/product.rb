@@ -1,11 +1,10 @@
 class Product < ApplicationRecord
+    has_many(:reviews, dependent: :destroy)
     
-    
-    validates(:title, presence: true, uniqueness: true)
+    validates(:title, presence: true)
     validates(
         :description,
-        presence: { message: "must exist" },
-        length: { minimum: 10 }
+        presence: { message: "must exist" }
     )
     validates(
         :price,
