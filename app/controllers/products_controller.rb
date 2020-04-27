@@ -1,5 +1,8 @@
 class ProductsController < ApplicationController
-    def index
+    
+  before_action :authenticate_user!, except: [:index, :show] 
+
+  def index
         @products = Product.all.order("updated_at DESC") 
     end
    
@@ -9,12 +12,14 @@ class ProductsController < ApplicationController
   
   def create
     @product = Product.new(params.require(:product).permit(:title, :description, :price,:sales_price))
+    @product.user = current_user
     if @product.save
       redirect_to products_path
     else
       render :new
     end
   end
+  
   def show
     id = params[:id]
     @product = Product.find(id)

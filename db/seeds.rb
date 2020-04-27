@@ -7,8 +7,30 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 Review.delete_all
 Product.delete_all
+User.delete_all
 
-NUM_PRODUCT = 1000
+
+NUM_PRODUCT = 200
+NUM_USER = 10
+PASSWORD = 'supersecret'
+
+super_user = User.create(
+    first_name: 'jon',
+    last_name: 'snow',
+    email: 'js@winterfell.gov',
+    password: PASSWORD
+)
+NUM_USER.times do
+    first_name = Faker::Name.first_name
+    last_name = Faker::Name.last_name
+    User.create(
+        first_name: first_name,
+        last_name: last_name,
+        email: Faker::Internet.email,
+        password: PASSWORD
+    )
+end
+users = User.all
 
 NUM_PRODUCT.times do 
     created_at = Faker::Date.backward(days: 365*10)
@@ -16,15 +38,16 @@ NUM_PRODUCT.times do
         title: Faker::Device.model_name,
         description: Faker::Appliance.equipment,
         price:  Faker::Number.within(range: 1..1000),
+        user: users.sample,
         created_at: created_at,
-        updated_at: created_at
-        
-    ) 
+        updated_at: created_at     
+    )
     if p.valid?
         p.reviews = rand(0..15).times.map do 
             Review.new(
                 rating: Faker::Number.between(from: 1.0, to: 5.0),
-                body: Faker::Hipster.sentence
+                body: Faker::Hipster.sentence,
+                user: users.sample
             )
         end
         
@@ -38,23 +61,4 @@ reviews = Review.all
 
 puts Cowsay.say("Generated #{product.count} products", :cow)
 puts Cowsay.say("Generated #{reviews.count} products", :cow)
-
-# User.delete_all
-
-# NUM_USER = 1000;
-
-# NUM_USER.times do
-#     created_at = Faker::Date.backward(days: 365*5)
-#     User.create(
-#         first_name: Faker::Name.first_name,
-#         last_name: Faker::Name.last_name,
-#         email: Faker::Internet.email,
-#         created_at: created_at,
-#         updated_at: created_at
-#     )
-    
-    
-# end
-# users= user.all
-
-# puts Cowsay.say("Generated #{users.count} users", :cow)
+puts Cowsay.say("Generated #{users.count} products", :cow)

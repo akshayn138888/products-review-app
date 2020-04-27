@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   # get("/products/:id", to: "products#show", as: :product)
   # patch("/products/:id", to: "products#update")
   # delete("/products/:id", to: "products#destroy")
-  
+  resources :users, only: [:new, :create]
+  resource :session, only: [:new, :create, :destroy]
   resources :products do 
   resources :reviews, only: [:create, :destroy]
   end
