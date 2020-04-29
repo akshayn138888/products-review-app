@@ -12,7 +12,11 @@
   Actual Price:$<%= @product.price %> <br>
   Sales Price:$<%= @product.sales_price %><br><br>
   <%# link_to arguments: name, path, options_object %>
-  <div>
+   <div>
+    
+    
+    <% if can? :crud, @product %>
+   
     <%= link_to(
       "Edit",
       edit_product_path(@product),
@@ -27,7 +31,9 @@
       data: { confirm: 'are you sure?' }
     )
     %>
+     <% end %>
   </div>
+ 
 </div>
 
 
@@ -78,6 +84,7 @@
       <p>
            <p class="font-weight-bold">Rating: <%= review.rating.round(2) %></p><br />
           <p  class="font-italic">Review: <%= review.body %></p><br />
+        <% if can? :crud, review %>
         <small>
           <%= link_to(
             "Delete",
@@ -89,6 +96,7 @@
             class: 'btn btn-danger btn-sm',
           ) %>
         </small>
+        <% end %>
         |
         <small>
         Rated On: <%= time_ago_in_words(review.created_at) %>

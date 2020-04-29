@@ -1,0 +1,26 @@
+<h1>Admin Index Page</h1>
+
+<div class='row'>
+  <div class='col-2'>
+  </div>
+   <strong> <p><%= @users.count %></p> </strong> 
+   
+<% @users.each do |user| %>
+        <br>
+      <strong> <p><%= user.id %></p> </strong> 
+      <br>
+      
+       <p><%= user.first_name %></p>
+       <p><%=user.last_name %></p><br>
+         <strong> <p><%= user.products.count %></p> </strong> 
+       <%   user.products.each do |product| %> 
+             <p> <%= product.title %> </p> <br>
+             <%   product.reviews.each do |review| %> 
+             <strong> <p><%= product.reviews.count %></p> </strong> 
+             <p> <%= review.body %> </p> <br>
+       <% end %> 
+       <% end %>   
+       
+       <br> <br> <br> <br>
+ <% end %>
+</div>

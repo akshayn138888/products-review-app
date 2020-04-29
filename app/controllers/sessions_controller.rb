@@ -13,7 +13,11 @@ class SessionsController < ApplicationController
       # A cookie is just a string of key value pairs
       # { session: {user_id: 384, color: 'blue'} }
       flash[:success] = "User Logged In"
+      if current_user.is_admin == true
+        redirect_to admin_index_path 
+      else
       redirect_to products_path
+      end
     else
       flash[:warning] = "Couldn't log In"
       flash[:secondary] = "yikes"

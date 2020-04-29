@@ -18,8 +18,17 @@ class ReviewsController < ApplicationController
     
     def destroy 
         @review = Review.find params[:id]
-        @review.destroy 
-        redirect_to product_path(@review.product)
+        if can?(:crud, @review)
+            @review.destroy 
+            redirect_to product_path(@review.product)
+        else 
+            #head will send an empty HTTP response with 
+            # a particular response code, in this case
+            # unauthorized 401. 
+            # http://billpatrianakos.me/blog/2013/10/13/list-of-rails-status-code-symbols/
+            head :unauthorized
+            # redirect_to root_path, alert: 'Not Authorized'
+        end
     end 
     
    ``

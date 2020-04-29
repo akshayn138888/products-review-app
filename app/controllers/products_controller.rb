@@ -1,9 +1,12 @@
 class ProductsController < ApplicationController
     
   before_action :authenticate_user!, except: [:index, :show] 
+  before_action :authorize!, only: [:edit, :update, :destroy]
 
   def index
-        @products = Product.all.order("updated_at DESC") 
+      
+          @products = Product.all.order("updated_at DESC") 
+        
     end
    
   def new
@@ -25,7 +28,9 @@ class ProductsController < ApplicationController
     @product = Product.find(id)
     #### a change is very important here also if your relating it to other things.
     @review = Review.new 
+    
     @reviews = @product.reviews.order(created_at: :desc)
+   
   end
   def destroy
     id = params[:id]
@@ -46,6 +51,9 @@ class ProductsController < ApplicationController
     else
       render :edit
     end
+  end
+  def authorize! 
+    redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, Product)
   end
   
 end
