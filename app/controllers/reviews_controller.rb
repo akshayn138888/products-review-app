@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-   
+    before_action :authorize!, only: [:create, :destroy]
   
     def create 
         @product = Product.find(params[:product_id])
@@ -31,7 +31,10 @@ class ReviewsController < ApplicationController
         end
     end 
     
-   ``
+    def liked
+        # all the questions that this particular logged in user has liked
+        @reviews = current_user.liked_reviews.order(created_at: :desc)
+      end
     
     private 
     def review_params 

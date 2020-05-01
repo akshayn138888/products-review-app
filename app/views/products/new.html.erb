@@ -1,5 +1,60 @@
 <h1>
-  New Question Page
+  New Product Page
 </h1>
 
-<%= render 'form' %>
+<% if @product.errors.present? %>
+  <p>
+    <%= @product.errors.full_messages.join(', ')%>
+  </p>
+<% end %>
+
+<%# by default rails forms will submit using XHR/AJAX we'll learn this in the future but for now we want to submit using HTML5 forms so we'll have to set the `local` option to true%>
+<%# https://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_with %>
+<div class = "container">
+<%= form_with model: @product, local:true do |f| %>
+  <div class='form-group'>
+    <%= f.label :title %>
+    <%= f.text_field(:title, class: 'form-control')%>
+  </div>
+ <div class='form-group'>
+    <%= f.label :description %>
+    <%= f.text_area(:description, class: 'form-control', cols: 50, rows: 5)%>
+  </div>
+    <div class='form-group'>
+    <%= f.label :price%>
+    <%= f.number_field(:price, class: 'form-control')%>
+  </div>
+     <div class='form-group'>
+    <%= f.label :sales_price%>
+    <%= f.number_field(:sales_price, class: 'form-control')%>
+  </div>
+
+     <%= f.label :token_names %>
+    <%= f.text_field :token_names %>
+  <%= f.submit "Create", class: 'btn btn-primary' %>
+<% end %>
+</div>
+<%# selectize docs:
+https://github.com/selectize/selectize.js/blob/master/docs/usage.md
+%>
+
+<script>
+$(function() {
+	$('#product_token_names').selectize({
+    delimeter: ',', 
+    persist: false, 
+    labelField: 'name',
+    valueField: 'name',
+    searchField: 'name',
+    options: <%= Token.select(:name).to_json(except: [:id]).html_safe %>,
+    // The above line selects only names from Token table and converts them to a json array of objects
+    // without including ids and makes sure its a safe_html string
+    // options: [{"name": "firstTag"}, {"name": "secondTag"}, {"name": "thirdTag"}, {"name": "fourthTag"}, {"name": "fifthTag"}]
+    create: function(input) {
+      return {
+        name: input
+      }
+    }
+  });
+});
+</script> 

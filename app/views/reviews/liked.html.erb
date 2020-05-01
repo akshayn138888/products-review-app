@@ -1,0 +1,10 @@
+<ul>
+  <% @reviews.each do |review| %>
+    <%# if you pass a instance to link_to it will create the href='/reviews/:id' %>
+    <%= link_to review do %>
+      <li class='list-group-item'>
+        <p><%= review.id %> <%= review.body %></p>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

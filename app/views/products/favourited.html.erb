@@ -1,0 +1,10 @@
+<h1>Favourite Products</h1>
+
+<ul>
+  <% @products.each do |product| %> <%# if you pass a instance to link_to it
+  will create the href='/questions/:id' %> <%= link_to product do %>
+  <li class="list-group-item">
+    <p><%= product.id %> <%= product.title %></p>
+  </li>
+  <% end %> <% end %>
+</ul>

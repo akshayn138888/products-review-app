@@ -12,6 +12,26 @@
   Actual Price:$<%= @product.price %> <br>
   Sales Price:$<%= @product.sales_price %><br><br>
   <%# link_to arguments: name, path, options_object %>
+  <div>
+  <small>
+    <% if @favourite.present? %>
+     <button class= "btn btn-success"> <%= link_to(
+          "Un-Favourite",
+          favourite_path(@favourite),
+          method: :delete
+        )
+      %></button>
+    <% else %>
+      <button class= "btn btn-success"><%= link_to(
+          "Make it your favourite!",
+          product_favourites_path(@product),
+          method: :post
+        )
+      %></button>
+      
+    <% end %>
+  </small>
+   </div><br><br>
    <div>
     
     
@@ -73,6 +93,7 @@
       placeholder: "Rate-between: 1 to 5",
       class: "form-control"
     )%>
+    
   </div>
   <%= f.submit "Rate This Product", class: "btn-warning btn-sm" %> <br><br>
 <% end %>
@@ -84,6 +105,25 @@
       <p>
            <p class="font-weight-bold">Rating: <%= review.rating.round(2) %></p><br />
           <p  class="font-italic">Review: <%= review.body %></p><br />
+          
+          <small>Liked by: <%= review.likes.count %></small>
+          <small>
+    <% if @like.present? %>
+      <%= link_to(
+          "Unlike",
+          like_path(@like),
+          method: :delete
+        )
+      %>
+    <% else %>
+      <%= link_to(
+          "Like",
+          review_likes_path(review),
+          method: :post
+        )
+      %>
+    <% end %>
+  </small>
         <% if can? :crud, review %>
         <small>
           <%= link_to(
@@ -99,7 +139,7 @@
         <% end %>
         |
         <small>
-        Rated On: <%= time_ago_in_words(review.created_at) %>
+        Rated On: <%= time_ago_in_words(review.created_at) %>By <%= review.user.first_name %> <%= review.user.last_name %>
         </small>
       </p>
     </li>

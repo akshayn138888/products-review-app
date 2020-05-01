@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Review.delete_all
+Tokenizing.delete_all 
+Token.delete_all
 Product.delete_all
 User.delete_all
 
@@ -33,6 +35,17 @@ NUM_USER.times do
 end
 users = User.all
 
+#Created Tags here. 
+NUM_TOKENS = 20
+
+NUM_TOKENS.times do 
+    Token.create(
+        name: Faker::Game.genre
+    )
+end
+tokens = Token.all 
+
+
 NUM_PRODUCT.times do 
     created_at = Faker::Date.backward(days: 365*10)
      p = Product.create(
@@ -52,7 +65,9 @@ NUM_PRODUCT.times do
             )
         end
         
-    end   
+    end
+    p.favouriters = users.shuffle.slice(0, rand(users.count))
+    p.tokens = tokens.shuffle.slice(0, rand(tokens.count))   
 end
 
 
@@ -63,3 +78,5 @@ reviews = Review.all
 puts Cowsay.say("Generated #{product.count} products", :cow)
 puts Cowsay.say("Generated #{reviews.count} products", :cow)
 puts Cowsay.say("Generated #{users.count} products", :cow)
+puts Cowsay.say("Generated #{Favourite.count} tokens", :cow)
+puts Cowsay.say("Generated #{Token.count} tokens", :cow)
